@@ -11,20 +11,20 @@ public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    public String registerCompany(Company company) {
-        if (companyRepository.existsByPhone(company.getPhone())) {
-            return "El teléfono ya está registrado";
-        }
-        if (companyRepository.existsByPhone(company.getName())) {
+    public String registerCompany(Company company) {  
+         System.out.println("Verificando si el nombre ya está registrado: " + company.getName());
+        
+        if (companyRepository.existsByName(company.getName())) {
             return "El nombres ya está registrado";
         }
-        if (companyRepository.existsByPhone(company.getPhone())) {
-            return "El teléfono ya está registrado";
-        }
-        
-        if (companyRepository.existsByEmail(company.getEmail())) {
+        System.out.println("Verificando si el email ya está registrado: " + company.getEmail());
+         if (companyRepository.existsByEmail(company.getEmail())) {
             return "El correo electrónico ya está registrado";
         }
+         System.out.println("Verificando si el teléfono ya está registrado: " + company.getPhone());
+         if (companyRepository.existsByPhone(company.getPhone())) {
+            return "El teléfono ya está registrado";
+        }       
         companyRepository.save(company);
         return "Empresa registrada con éxito";
     }

@@ -18,6 +18,7 @@ public class CompanyController {
 
     @PostMapping("/register")
     public ResponseEntity<String> registerCompany(@RequestBody Company company) {
+         System.out.println("Datos recibidos: " + company.getName() + ", " + company.getNif() + ", " + company.getEmail() + ", " + company.getPhone());
         if (company.getName() == null || company.getNif() == null || company.getEmail() == null || company.getIban() == null) {
             return ResponseEntity.badRequest().body("Por favor, rellena todos los campos obligatorios.");
         }

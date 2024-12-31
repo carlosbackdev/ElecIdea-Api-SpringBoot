@@ -4,8 +4,9 @@ package com.example.ElecIdea.repositories;
 import com.example.ElecIdea.model.Company;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CompanyRepository extends JpaRepository<Company, Long> {
-    boolean existsByName(String phone);
-    boolean existsByPhone(String phone);
+public interface CompanyRepository extends JpaRepository<Company, String> {
+    boolean existsByName(String name);
     boolean existsByEmail(String email);
+    boolean existsByPhone(String phone);
+    
 }

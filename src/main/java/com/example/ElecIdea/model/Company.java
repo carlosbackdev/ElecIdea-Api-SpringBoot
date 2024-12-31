@@ -7,18 +7,23 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import lombok.Data;
+
 
 @Entity
 @Table(name = "company")
+@Data
+
 public class Company {
-    
     @Column(name = "NAME",nullable = false, unique = true)
     private String name;
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "NIF",nullable = false, unique = true)
-    private Long nif;
+    private String nif;
     
     @Column(name = "ADDRESS")
     private String address;
@@ -43,84 +48,30 @@ public class Company {
       
        @Column(name = "CODE")
     private String code;
-
-    public String getName() {
-        return name;
+    
+    public Company() {
     }
-
-    public void setName(String name) {
+    
+    @JsonCreator
+    public Company(@JsonProperty("name") String name,
+                   @JsonProperty("nif") String nif,
+                   @JsonProperty("email") String email,
+                   @JsonProperty("iban") String iban,
+                   @JsonProperty("address") String address,
+                   @JsonProperty("postal") String postal,
+                   @JsonProperty("city") String city,
+                   @JsonProperty("phone") String phone,
+                   @JsonProperty("idUser") String idUser,
+                   @JsonProperty("code") String code) {
         this.name = name;
-    }
-
-    public Long getNif() {
-        return nif;
-    }
-
-    public void setNif(Long Nif) {
         this.nif = nif;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String Address) {
-        this.address = address;
-    }
-
-    public String getPostal() {
-        return postal;
-    }
-
-    public void setPostal(String Postal) {
-        this.postal = postal;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String City) {
-        this.city = city;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String Email) {
         this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String Phone) {
-        this.phone = phone;
-    }
-
-    public String getIban() {
-        return iban;
-    }
-
-    public void setIban(String Iban) {
         this.iban = iban;
-    }
-
-    public String getIdUser() {
-        return idUser;
-    }
-
-    public void setIdUser(String IdUser) {
+        this.address = address;
+        this.postal = postal;
+        this.city = city;
+        this.phone = phone;
         this.idUser = idUser;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String Code) {
         this.code = code;
     }
 }
