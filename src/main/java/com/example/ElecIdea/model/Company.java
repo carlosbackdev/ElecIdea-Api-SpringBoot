@@ -25,4 +25,5 @@ public class Company {
     private String ID_USER;
     private String CODE;
     // Getters and Setters
+    
 }
