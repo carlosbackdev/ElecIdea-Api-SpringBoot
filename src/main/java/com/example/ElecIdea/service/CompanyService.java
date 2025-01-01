@@ -2,30 +2,49 @@ package com.example.ElecIdea.service;
 
 import com.example.ElecIdea.model.Company;
 import com.example.ElecIdea.repositories.CompanyRepository;
+import com.example.ElecIdea.utils.contraseña;
+import com.example.ElecIdea.utils.PasswordGenerate;
+import com.example.ElecIdea.utils.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.MessagingException;
+import org.springframework.mail.javamail.JavaMailSender;
+import com.example.ElecIdea.utils.ResponseMessage;
 
 @Service
 public class CompanyService {
 
     @Autowired
     private CompanyRepository companyRepository;
+    
+    @Autowired
+    private EmailService emailService;
 
-    public String registerCompany(Company company) {  
-         System.out.println("Verificando si el nombre ya está registrado: " + company.getName());
-        
+    public ResponseMessage registerCompany(Company company) {          
         if (companyRepository.existsByName(company.getName())) {
-            return "El nombres ya está registrado";
+            return new ResponseMessage("error", "El nombre ya está registrado");
         }
-        System.out.println("Verificando si el email ya está registrado: " + company.getEmail());
          if (companyRepository.existsByEmail(company.getEmail())) {
-            return "El correo electrónico ya está registrado";
+            return new ResponseMessage("error", "El correo electrónico ya está registrado");
         }
-         System.out.println("Verificando si el teléfono ya está registrado: " + company.getPhone());
          if (companyRepository.existsByPhone(company.getPhone())) {
-            return "El teléfono ya está registrado";
-        }       
-        companyRepository.save(company);
-        return "Empresa registrada con éxito";
+            return new ResponseMessage("error", "El teléfono ya está registrado");
+        }
+        String codigo = PasswordGenerate.generarContrasena(14);
+        String codigoEncriptado = contraseña.encryptPassword(codigo);
+         
+            try {
+                emailService.enviarCorreo(company.getEmail(), "Código de Registro", "Tu código de registro para generar usuarios es: " + codigo);
+            } catch (MessagingException e) {
+                e.printStackTrace();
+                return new ResponseMessage("error", "Error al enviar el correo electrónico.");
+            }
+            
+            company.setCode(codigoEncriptado);
+            companyRepository.save(company);
+        return new ResponseMessage("success", "Empresa registrada con éxito");
+            
+        }        
     }
-}
+

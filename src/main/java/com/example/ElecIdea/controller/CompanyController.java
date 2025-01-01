@@ -7,6 +7,7 @@ import com.example.ElecIdea.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.ElecIdea.utils.ResponseMessage;
 
 @RestController
 @RequestMapping("/api/companies")
@@ -17,15 +18,13 @@ public class CompanyController {
     private CompanyService companyService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerCompany(@RequestBody Company company) {
-         System.out.println("Datos recibidos: " + company.getName() + ", " + company.getNif() + ", " + company.getEmail() + ", " + company.getPhone());
+    public ResponseEntity<ResponseMessage> registerCompany(@RequestBody Company company) {
         if (company.getName() == null || company.getNif() == null || company.getEmail() == null || company.getIban() == null) {
-            return ResponseEntity.badRequest().body("Por favor, rellena todos los campos obligatorios.");
+            return ResponseEntity.badRequest().body(new ResponseMessage("error", "Por favor, rellena todos los campos obligatorios."));
         }
 
-         String result = companyService.registerCompany(company);
+        ResponseMessage result = companyService.registerCompany(company);
 
-        // Devolver la respuesta adecuada según el resultado
         if (result.equals("Empresa registrada con éxito")) {
             return ResponseEntity.ok(result);
         } else {
