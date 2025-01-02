@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -11,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 @Entity
 @Table(name = "login")
 @Data
+
 public class User {
     @Id
     @Column(name = "ID", nullable = false, unique = true)

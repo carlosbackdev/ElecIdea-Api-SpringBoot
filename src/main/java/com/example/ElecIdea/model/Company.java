@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import lombok.Data;
 
 
 @Entity
