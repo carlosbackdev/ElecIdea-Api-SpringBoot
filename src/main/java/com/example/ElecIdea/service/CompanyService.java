@@ -21,7 +21,7 @@ public class CompanyService {
     @Autowired
     private EmailService emailService;
 
-    public ResponseMessage registerCompany(Company company) {          
+    public ResponseMessage registerCompany(Company company) {   
         if (companyRepository.existsByName(company.getName())) {
             return new ResponseMessage("error", "El nombre ya está registrado");
         }
@@ -31,19 +31,25 @@ public class CompanyService {
          if (companyRepository.existsByPhone(company.getPhone())) {
             return new ResponseMessage("error", "El teléfono ya está registrado");
         }
+         if (companyRepository.existsByNif(company.getNif())) {
+            return new ResponseMessage("error", "El NIF ya está registrado");
+        }
         String codigo = PasswordGenerate.generarContrasena(14);
         String codigoEncriptado = contraseña.encryptPassword(codigo);
-         
+        
+        ResponseMessage responseMessage = new ResponseMessage("success", "Empresa registrada con éxito.\n\nEn tu correo recibirás el código de alta de usuarios.");
+
+            new Thread(() -> {
             try {
                 emailService.enviarCorreo(company.getEmail(), "Código de Registro", "Tu código de registro para generar usuarios es: " + codigo);
             } catch (MessagingException e) {
                 e.printStackTrace();
-                return new ResponseMessage("error", "Error al enviar el correo electrónico.");
             }
+        }).start();
             
             company.setCode(codigoEncriptado);
             companyRepository.save(company);
-        return new ResponseMessage("success", "Empresa registrada con éxito");
+        return responseMessage;
             
         }        
     }
