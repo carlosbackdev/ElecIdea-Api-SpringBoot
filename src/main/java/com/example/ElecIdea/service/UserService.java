@@ -13,7 +13,7 @@ import com.example.ElecIdea.utils.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.ElecIdea.utils.contraseña;
-
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -41,9 +41,21 @@ public class UserService {
     user.setNif(company.getNif());
     user.setUser("usuario");
     user.setId(id);
+    user.setPassword(contraseña.encryptPassword(user.getPassword()));
     userRepository.save(user);
-    ResponseMessage responseMessage = new ResponseMessage("success", "Empresa registrada con éxito.\n\nEn tu correo recibirás el código de alta de usuarios.");
+    ResponseMessage responseMessage = new ResponseMessage("success", "Usuario registrado con éxito.");
     return responseMessage;
     }
+    
+    public User validateUser(String usuario, String password) {
+    User user = userRepository.findByUsuario(usuario).orElse(null);
+        if (user != null && user.getPassword().equals(contraseña.encryptPassword(password))) {
+            return user;
+        }
+        return null;
+    }
+    public Optional<User> findById(String userId) {
+        return userRepository.findById(userId);
+    }       
 }
     

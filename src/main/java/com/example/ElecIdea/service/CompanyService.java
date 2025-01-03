@@ -37,7 +37,7 @@ public class CompanyService {
         String codigo = PasswordGenerate.generarContrasena(14);
         String codigoEncriptado = contraseña.encryptPassword(codigo);
         
-        ResponseMessage responseMessage = new ResponseMessage("success", "Usuario registrado con éxito.");
+        ResponseMessage responseMessage = new ResponseMessage("success", "Empresa registrada con éxito.\n\nEn tu correo recibirás el código de alta de usuarios.");
 
             new Thread(() -> {
             try {
