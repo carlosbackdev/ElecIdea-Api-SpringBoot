@@ -16,11 +16,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 @Data
 public class Client {
 
-    @Column(name = "NAME", nullable = false, unique = true)
+    @Column(name = "NAME")
     private String name;
 
     @Id
-    @Column(name = "ID", nullable = false, unique = true)
+    @Column(name = "ID")
     private String id;
 
     @Column(name = "ADDRESS")

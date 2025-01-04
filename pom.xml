@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.4.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/>
 	</parent>
 	<groupId>com.example</groupId>
 	<artifactId>ElecIdea</artifactId>
@@ -53,7 +53,7 @@
                 <dependency>
                     <groupId>mysql</groupId>
                     <artifactId>mysql-connector-java</artifactId>
-                    <version>8.0.33</version> <!-- Asegúrate de usar la versión adecuada -->
+                    <version>8.0.33</version> 
                 </dependency>
 		<dependency>
 			 <groupId>org.projectlombok</groupId>
@@ -71,13 +71,18 @@
                     <artifactId>jackson-databind</artifactId>
                 </dependency>
                 <dependency>
-                    <groupId>jakarta.persistence</groupId>
-                    <artifactId>jakarta.persistence-api</artifactId>
-                    <version>3.1.0</version>
-                </dependency>
-                <dependency>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-mail</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>jakarta.persistence</groupId>
+                    <artifactId>jakarta.persistence-api</artifactId>
+                    <version>3.1.0</version> <!-- Utiliza la versión compatible con Hibernate 6 -->
+                </dependency>
+                <dependency>
+                    <groupId>org.hibernate</groupId>
+                    <artifactId>hibernate-core</artifactId>
+                    <version>6.0.0.Final</version>
                 </dependency>
 	</dependencies>
 
