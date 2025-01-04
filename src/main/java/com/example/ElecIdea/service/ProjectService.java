@@ -18,4 +18,8 @@ public class ProjectService {
         return projectRepository.findTop5ByNifOrderByDateDesc(nif);
     }
     
+    public List<Project> searchProjectByName(String nif, String name) {
+        return projectRepository.findByNifAndNameContainingIgnoreCase(nif, name);
+    } 
+    
 }

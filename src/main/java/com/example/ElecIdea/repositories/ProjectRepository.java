@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends JpaRepository<Project, String> {
     List<Project> findTop5ByNifOrderByDateDesc(String nif);
+    List<Project> findByNifAndNameContainingIgnoreCase(String nif, String name);
 }

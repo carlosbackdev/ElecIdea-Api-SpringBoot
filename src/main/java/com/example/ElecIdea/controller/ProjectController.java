@@ -32,9 +32,7 @@ public class ProjectController {
                 projectData.put("projectName", project.getName());
                 projectData.put("projectType", project.getType());
                 projectData.put("projectDate", project.getDate());
-                projectData.put("projectInfo", project.getInfo());
-                
-                
+                projectData.put("projectInfo", project.getInfo());               
                 if (project.getClient() != null) {
                     projectData.put("clientName", project.getClient().getName());
                 } else {
@@ -49,5 +47,33 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
         }
     }
+    @GetMapping("/{nif}/search")
+    public ResponseEntity<List<Map<String, Object>>> searchProjectByName(@PathVariable String nif, @RequestParam String name) {
+        List<Project> Projects = projectService.searchProjectByName(nif, name);
+        
+        if (Projects != null && !Projects.isEmpty()) {
+            List<Map<String, Object>> response = new ArrayList<>();
+            
+            for (Project project : Projects) {
+                Map<String, Object> projectData = new HashMap<>();
+                projectData.put("projectName", project.getName());
+                projectData.put("projectType", project.getType());
+                projectData.put("projectDate", project.getDate());
+                projectData.put("projectInfo", project.getInfo());               
+                if (project.getClient() != null) {
+                    projectData.put("clientName", project.getClient().getName());
+                } else {
+                    projectData.put("clientName", "Cliente no disponible");
+                }
+                
+                response.add(projectData);
+            }
+
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
+        }
+    }
+    
 }
 
