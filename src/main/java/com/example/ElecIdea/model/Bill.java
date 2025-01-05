@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import lombok.Data;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 @Data
 public class Bill {
     
-    @Column(numberfactura = "NUMBER_FACTURA")
+    @Column(name = "NUMBER_FACTURA")
     private String numberFactura;
 
     @Column(name = "ID_CLIENT")
@@ -64,10 +64,11 @@ public class Bill {
     
     
     @JsonCreator
-    public Client(@JsonProperty("numberFactura") String numberFactura,
+    public Bill(@JsonProperty("numberFactura") String numberFactura,
                   @JsonProperty("id") String id,
                   @JsonProperty("name") String name,
                   @JsonProperty("address") String address,
+                  @JsonProperty("hour") String hour,
                   @JsonProperty("date") String date,
                   @JsonProperty("numberMaterial") String numberMaterial,
                   @JsonProperty("totalMaterial") String totalMaterial,
@@ -81,6 +82,7 @@ public class Bill {
         this.id = id;
         this.name = name;
         this.address = address;
+        this.hour = hour;
         this.date = date;
         this.numberMaterial = numberMaterial;
         this.totalMaterial = totalMaterial;
