@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.ElecIdea.utils.ResponseMessage;
+import java.util.*;
+import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/api/companies")
@@ -30,6 +32,15 @@ public class CompanyController {
             return ResponseEntity.ok(result);
         } else {
             return ResponseEntity.badRequest().body(result);
+        }
+    }
+    @GetMapping("/{nif}")
+    public ResponseEntity<?> getCompanyByNif(@PathVariable String nif) {
+        Optional<Company> company = companyService.getCompanyByNif(nif);
+        if (company.isPresent()) {
+            return ResponseEntity.ok(company.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Empresa no encontrada.");
         }
     }
 }

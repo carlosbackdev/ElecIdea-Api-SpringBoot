@@ -69,4 +69,15 @@ public class BillController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al enviar el correo.");
         }
     }
+    //cliente
+    @GetMapping
+    public ResponseEntity<?> getBillByCode(@RequestParam("codigo") String code) {
+    Optional<Bill> bill = billService.getBillByCode(code);
+    if (bill.isPresent()) {
+        return ResponseEntity.ok(bill.get());
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Factura no encontrada.");
+    }
+}
+    
 }

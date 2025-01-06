@@ -60,10 +60,10 @@ public class BillService {
                 String subject = "Factura pendiente: " + billCode;
                 String message = "<p>Estimado/a " + client.getName() + ",</p>"
                         + "<p>Le informamos que su factura con código <strong>" + billCode + "</strong> está pendiente.</p>"
-                        + "<p>Por favor, acceda al siguiente enlace para pagarla:http....</p>"
+                        + "<p>Por favor, acceda al siguiente enlace para pagarla: http://127.0.0.1:5500/pages/cliente.html?codigo="+billCode+"</p>"
                         + "<p>Saludos cordiales,</p><p>El equipo de ElecIdea</p>";
 
-                emailService.enviarCorreo(client.getEmail(), subject, message);//igual tengo que añadir otro argumento aunque sea vacio
+                emailService.enviarCorreo(client.getEmail(), subject, message);
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
@@ -71,4 +71,9 @@ public class BillService {
         bill.setStatus("pendiente pago");
         billRepository.save(bill);
     }
+     
+     //cliente
+     public Optional<Bill> getBillByCode(String code) {
+    return billRepository.findByCode(code);
+ }
 }

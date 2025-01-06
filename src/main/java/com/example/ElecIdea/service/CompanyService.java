@@ -11,6 +11,7 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.MessagingException;
 import org.springframework.mail.javamail.JavaMailSender;
 import com.example.ElecIdea.utils.ResponseMessage;
+import java.util.*;
 
 @Service
 public class CompanyService {
@@ -41,7 +42,10 @@ public class CompanyService {
 
             new Thread(() -> {
             try {
-                emailService.enviarCorreo(company.getEmail(), "Código de Registro", "Tu código de registro para generar usuarios es: " + codigo);
+                emailService.enviarCorreo(company.getEmail(), "<p>Código de Registro", "Estimado/a "+company.getName()+",</p>"
+                        + "<p>Nos complace informarle que su empresa ha sido registrada con éxito en nuestro sistema.</p><p>Para proceder con el registro de usuarios adicionales de su empresa,</p>"
+                        + "<p>solicitamos que utilice el siguiente código y lo conserve en un lugar seguro: " + codigo + "</p>"
+                        + "<p>Agradecemos su confianza en nuestros servicios.</p><p>Atentamente,[ElecIdea]</p>");
             } catch (MessagingException e) {
                 e.printStackTrace();
             }
@@ -51,6 +55,10 @@ public class CompanyService {
             companyRepository.save(company);
         return responseMessage;
             
-        }        
-    }
+        }
+        //cliente 
+        public Optional<Company> getCompanyByNif(String nif) {
+            return companyRepository.findById(nif);
+        }
+}
 
