@@ -56,6 +56,19 @@ public class UserService {
     }
     public Optional<User> findById(String userId) {
         return userRepository.findById(userId);
-    }       
+    }
+    
+    public ResponseMessage changePassword(String userId, String newPassword) {
+    Optional<User> userOptional = userRepository.findById(userId);
+    if (userOptional.isPresent()) {
+        User user = userOptional.get();
+        user.setPassword(contraseña.encryptPassword(newPassword));
+        userRepository.save(user);
+        return new ResponseMessage("success", "Contraseña actualizada con éxito.");
+    } else {
+        return new ResponseMessage("error", "Usuario no encontrado.");
+    }
+}
+    
 }
     

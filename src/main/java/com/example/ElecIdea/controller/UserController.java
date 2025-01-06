@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import java.util.Optional;
+import com.example.ElecIdea.utils.ChangePasswordRequest;
 
 @RestController
 @RequestMapping("/api/user")
@@ -61,5 +62,18 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
         }
+        
+    @PostMapping("/change-password")
+    public ResponseEntity<ResponseMessage> changePassword(@RequestBody ChangePasswordRequest request) {
+    if (request.getUserId() == null || request.getNewPassword() == null) {
+        return ResponseEntity.badRequest().body(new ResponseMessage("error", "Por favor, rellena todos los campos obligatorios."));
+    }
+    ResponseMessage result = userService.changePassword(request.getUserId(), request.getNewPassword());
+    if ("success".equals(result.getStatus())) {
+        return ResponseEntity.ok(result);
+    } else {
+        return ResponseEntity.badRequest().body(result);
+    }
+}
 
 }

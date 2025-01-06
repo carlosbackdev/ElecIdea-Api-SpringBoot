@@ -43,7 +43,7 @@ public class BillService {
 
          List<Bill> bills = billRepository.findByNifAndStatusAndDateContaining(nif, "pagado", monthYear);
         double total = bills.stream().mapToDouble(bill -> Double.parseDouble(bill.getTotal())).sum();
-
+        total=total-(total*0.21);
         return String.format("%.2f", total); 
     }
 
