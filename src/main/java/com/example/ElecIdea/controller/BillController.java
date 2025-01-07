@@ -69,6 +69,23 @@ public class BillController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al enviar el correo.");
         }
     }
+    @PostMapping("/{billCode}/pay")
+    public ResponseEntity<String> updateBillStatusToPaid(@PathVariable String billCode) {
+        try {
+            boolean updated = billService.updateBillStatusToPaid(billCode);
+            if (updated) {
+                return ResponseEntity.ok("El estado de la factura se ha actualizado a 'pagado'.");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Factura no encontrada o no se pudo actualizar.");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Ocurrió un error al actualizar la factura.");
+        }
+    }
+    
+    
+    
+    
     //cliente
     @GetMapping
     public ResponseEntity<?> getBillByCode(@RequestParam("codigo") String code) {

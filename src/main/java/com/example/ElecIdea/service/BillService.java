@@ -72,6 +72,18 @@ public class BillService {
         billRepository.save(bill);
     }
      
+    public boolean updateBillStatusToPaid(String billCode) {
+        Optional<Bill> billOptional = billRepository.findByCode(billCode);
+        if (billOptional.isPresent()) {
+            Bill bill = billOptional.get();
+            bill.setStatus("pagado");
+            billRepository.save(bill); 
+            return true;
+        } else {
+            return false; 
+        }
+    }
+     
      //cliente
      public Optional<Bill> getBillByCode(String code) {
     return billRepository.findByCode(code);
